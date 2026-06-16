@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Credits - Drone Detection System</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: #333;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* Dark overlay */
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0);
+      z-index: 5;
+      pointer-events: none;
+      transition: background 0.4s ease;
+    }
+
+    body.dimmed::before {
+      background: rgba(0,0,0,0.6);
+    }
+
+    header {
+      text-align: center;
+      padding: 40px 20px;
+      background: white;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      position: relative;
+      z-index: 10;
+    }
+
+    header h1 { color: #764ba2; margin: 0; }
+    header p { margin-top: 8px; font-size: 18px; color: #444; }
+
+    .info-section {
+      max-width: 900px;
+      margin: 40px auto;
+      background: white;
+      padding: 30px;
+      border-radius: 16px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+      text-align: center;
+      position: relative;
+      z-index: 10;
+      transition: transform 0.5s ease;
+    }
+
+    .info-section h2 { color: #667eea; margin-bottom: 15px; }
+    .info-section img { max-width: 100%; height: auto; margin-top: 20px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
+    .info-section p { font-size: 16px; color: #444; line-height: 1.6; margin-top: 15px; }
+
+    .team {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 25px;
+      max-width: 1100px;
+      margin: 40px auto;
+      padding: 20px;
+      perspective: 1200px;
+      position: relative;
+      z-index: 10;
+    }
+
+    .member {
+      background: white;
+      border-radius: 14px;
+      padding: 60px 20px 20px 20px;
+      text-align: center;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+      transition: transform 0.8s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.8s ease;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      transform-origin: center center;
+      z-index: 1;
+    }
+
+    .team:hover .member:not(:hover) {
+      filter: brightness(0.7) blur(1px);
+    }
+
+    .member img {
+      width: 100px;
+      height: 100px;
+      object-fit: cover;
+      border-radius: 50%;
+      margin: -50px 0 15px 0;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.25);
+      transition: transform 0.8s cubic-bezier(0.25, 0.8, 0.25, 1);
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .member:hover {
+      transform: scale(2.0);
+      box-shadow: 0 30px 60px rgba(0,0,0,0.6);
+      z-index: 10;
+    }
+
+    .member:hover img {
+      transform: scale(1.3);
+    }
+
+    .member h3 { margin: 8px 0; color: #764ba2; transition: color 0.3s ease; }
+    .member .role { font-weight: bold; color: #007bff; transition: color 0.3s ease; }
+    .member p { margin: 4px 0; font-size: 14px; color: #444; transition: color 0.3s ease; }
+
+    .back-btn {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 12px 20px;
+      background: linear-gradient(135deg, #ff7eb3, #ff758c);
+      color: white;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: 0.3s;
+      position: relative;
+      z-index: 10;
+    }
+
+    .back-btn:hover {
+      background: linear-gradient(135deg, #ff5e99, #ff3e7f);
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      background: #333;
+      color: white;
+      margin-top: 40px;
+      position: relative;
+      z-index: 10;
+    }
+
+    @media (max-width: 500px) {
+      .member:hover { transform: scale(1.5); }
+      .member:hover img { transform: scale(1.2); }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Credits</h1>
+    <p>Meet Our Team - Drone Detection System</p>
+  </header>
+
+  <section class="info-section">
+    <h2>About the Drone Detection System</h2>
+    <p>
+      Our Drone Detection System uses advanced computer vision and machine learning 
+      techniques to identify drones in real-time. By processing video frames, 
+      the system can detect flying drones, classify objects, and alert the user. 
+      It is designed for security, surveillance, and safety applications, ensuring 
+      that unauthorized drone activities are quickly detected and reported.
+    </p>
+    <img src="{{ url_for('static', filename='drone_img.png') }}" alt="Drone Detection Image" height="360px" width="360px">
+  </section>
+
+  <section class="team">
+    <div class="member">
+      <img src="{{ url_for('static', filename='person1.jpg') }}" alt="Person One">
+      <h3>SHAIK AYAN</h3>
+      <p class="role">Project Lead / Full Stack Developer</p>
+      <p><strong>USN:</strong> 1KN22CS104</p>
+      <p><strong>Contact:</strong> itsshaikayan@gmail.com</p>
+    </div>
+
+    <div class="member">
+      <img src="{{ url_for('static', filename='person2.jpg') }}" alt="Person Two">
+      <h3>SAYEED AHMED.R</h3>
+      <p class="role">Machine Learning / CV Engineer</p>
+      <p><strong>USN:</strong> 1KN22CS102</p>
+      <p><strong>Contact:</strong> s3629028@gmail.com</p>
+    </div>
+
+    <div class="member">
+      <img src="{{ url_for('static', filename='person3.jpg') }}" alt="Person Three">
+      <h3>MOHAMMED ZAHID</h3>
+      <p class="role">Frontend / UI Developer</p>
+      <p><strong>USN:</strong> 1KN22CS066</p>
+      <p><strong>Contact:</strong> mohammedzahidzahid007@gmail.com</p>
+    </div>
+
+    <div class="member">
+      <img src="{{ url_for('static', filename='person4.jpg') }}" alt="Person Four">
+      <h3>S.M DANISH</h3>
+      <p class="role">Backend / Deployment Engineer</p>
+      <p><strong>USN:</strong> 1KN22CS096</p>
+      <p><strong>Contact:</strong>sahildanish44132@gmail.com</p>
+    </div>
+  </section>
+
+  <div style="text-align:center;">
+    <a href="{{ url_for('home') }}" class="back-btn">⬅ Back to Detection</a>
+  </div>
+
+  <footer>
+    <p>© 2025 Drone Detection System | All Rights Reserved</p>
+  </footer>
+
+  <script>
+    const body = document.body;
+    const members = document.querySelectorAll('.member');
+
+    members.forEach(member => {
+      member.addEventListener('mouseenter', () => {
+        body.classList.add('dimmed');
+        member.style.zIndex = 10;
+      });
+      member.addEventListener('mouseleave', () => {
+        body.classList.remove('dimmed');
+        member.style.zIndex = 1;
+      });
+    });
+  </script>
+</body>
+</html>

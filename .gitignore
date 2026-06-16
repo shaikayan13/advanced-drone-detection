@@ -1,0 +1,36 @@
+# Python Virtual Environments
+venv/
+env/
+.venv/
+
+# Python Cache Files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# IDE Files
+.vscode/
+.idea/
+
+# Node.js
+node_modules/
+
+# Build Files
+build/
+dist/
+out/
+
+# Logs
+*.log
+
+# OS Files
+.DS_Store
+Thumbs.db
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Temporary Files
+temp/
+tmp/

@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Drone Detection System</title>
+  <link rel="icon" type="image/png" href="{{ url_for('static', filename='drone_image.png') }}">
+
+  <style>
+    /* General body and container */
+    body { 
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+      background: linear-gradient(135deg,#667eea,#764ba2); 
+      display:flex; 
+      justify-content:center; 
+      align-items:center; 
+      min-height:100vh; 
+      margin:0; 
+      padding:10px; 
+    }
+    .container { 
+      text-align:center; 
+      background:#fff; 
+      padding:25px 30px; 
+      border-radius:14px; 
+      box-shadow:0 10px 30px rgba(0,0,0,0.25); 
+      max-width:700px; 
+      width:100%; 
+      transition: all 0.3s ease;
+    }
+
+    h1 { color:#333; font-size:2rem; margin-bottom:5px; } 
+    h2 { color:#764ba2; font-size:1.2rem; margin-top:0; }
+
+    /* Detection feed styling */
+    #detection-feed { 
+      margin-top: 20px; 
+      width: 100%; 
+      max-width: 400px;
+      height: auto;
+      border-radius:10px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+      transition: transform 0.3s ease, box-shadow 0.3s ease; 
+    }
+
+    /* Control buttons */
+    .controls {
+      margin-top:20px;
+      display:flex;
+      justify-content:center;
+      flex-wrap:wrap;
+      gap:10px;
+    }
+    button { 
+      color:white; 
+      border:none; 
+      padding:12px 25px; 
+      font-size:15px; 
+      font-weight:600; 
+      border-radius:12px; 
+      cursor:pointer; 
+      transition: transform 0.2s, box-shadow 0.2s; 
+    }
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow:0 6px 15px rgba(0,0,0,0.2);
+    }
+    .detect-btn{background:linear-gradient(135deg,#ff7eb3,#ff758c);}
+    .credits-btn{background:linear-gradient(135deg,#42e695,#3bb2b8);}
+
+    /* Status messages */
+    #statusMsg { margin-top:15px; font-weight:600; font-size:1rem; color:#555; }
+    #alerts { margin-top:20px; text-align:center; display:flex; justify-content:space-around; flex-wrap:wrap; gap:15px; }
+    .alert { color:#b22222; font-weight:700; font-size:1rem; }
+    .ok { color:#228B22; font-weight:700; font-size:1rem; }
+
+    /* Responsive adjustments */
+    @media (max-width: 500px) {
+      h1 { font-size:1.5rem; }
+      h2 { font-size:1rem; }
+      button { font-size:14px; padding:10px 18px; }
+      #alerts { flex-direction:column; gap:10px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Major Project</h2>
+    <h1>Drone Detection System</h1>
+
+    <!-- Live detection feed -->
+    <img id="detection-feed" src="{{ url_for('static', filename='drone_img.png') }}" alt="Drone Feed">
+
+    <div class="controls">
+      <button class="detect-btn" onclick="startDetection()">Start Detection</button>
+      <button class="credits-btn" onclick="window.location.href='{{ url_for('credits') }}'">👥 View Credits</button>
+    </div>
+
+    <p id="statusMsg">Idle</p>
+
+    <div id="alerts">
+      <p id="visual" class="ok"> No visual detection yet.</p>
+      <p id="sound" class="ok"> No sound detection yet.</p>
+    </div>
+  </div>
+
+  <script>
+    let last = {visual:null, sound:null};
+    let detectionStarted = false;
+
+    function startDetection() {
+      if (detectionStarted) return;
+      fetch("/start-detection", { method: "POST" })
+        .then(r => r.json())
+        .then(data => {
+          document.getElementById("statusMsg").innerText = data.status;
+          detectionStarted = true;
+        })
+        .catch(err => {
+          document.getElementById("statusMsg").innerText = "Error starting detection";
+        });
+    }
+
+    async function pollStatus() {
+      try {
+        const res = await fetch("/status");
+        const data = await res.json();
+
+        // Visual
+        if (data.visual) {
+          document.getElementById("visual").innerHTML = " Drone visually detected!";
+          document.getElementById("visual").className = "alert";
+        } else {
+          document.getElementById("visual").innerHTML = " No drone visually detected.";
+          document.getElementById("visual").className = "ok";
+        }
+
+        // Sound
+        if (data.sound) {
+          document.getElementById("sound").innerHTML = " Drone sound detected!";
+          document.getElementById("sound").className = "alert";
+        } else {
+          document.getElementById("sound").innerHTML = " No drone sound detected.";
+          document.getElementById("sound").className = "ok";
+        }
+
+        last.visual = data.visual;
+        last.sound = data.sound;
+      } catch (e) { console.error("Poll error:", e); }
+    }
+
+    setInterval(pollStatus, 1000);
+    pollStatus();
+  </script>
+</body>
+</html>
